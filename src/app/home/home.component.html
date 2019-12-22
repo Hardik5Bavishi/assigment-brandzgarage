@@ -1,0 +1,49 @@
+<div class="h-100-p" fxLayoutAlign="center center">
+    <ng-container *ngIf="isValid; else content">
+        <div fxLayoutAlign="center center">
+            <button mat-raised-button color="primary" (click)="searchArtist()">Search Artist</button>
+        </div>
+    </ng-container>
+
+    <ng-template #content>
+        <ng-container *ngIf="isSearch;else other_content">
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <mat-form-field appearance="outline" class="w-100-p">
+                    <mat-label>Name</mat-label>
+                    <input [(ngModel)]="name" name="name" matInput placeholder="Name">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>No. of Tracks</mat-label>
+                    <input matInput [(ngModel)]="tracks" name="tracks" placeholder="No. of Tracks">
+                </mat-form-field>
+                <div fxLayoutAlign="center center">
+                    <button mat-raised-button color="primary" (click)="search()">Search</button>
+                </div>
+            </div>
+        </ng-container>
+    </ng-template>
+
+    <ng-template #other_content>
+        <div fxLayout="column">
+            <ng-container *ngIf="artistInfo.length != 0;else no_records">
+                <mat-tab-group>
+                    <ng-container *ngFor="let item of artistInfo;">
+                        <mat-tab [label]="name | uppercase">
+                            <div class="padding" fxLayout="column" fxLayoutAlign="center center">
+                                <label> <strong> Artist : </strong> {{item.artistName}}</label>
+                                <label> Track : {{item.trackName}}</label>
+                            </div>
+                        </mat-tab>
+                    </ng-container>
+                </mat-tab-group>
+            </ng-container>
+            <ng-template #no_records>
+                No records found for this artist.
+            </ng-template>
+            <div fxLayout="row">
+                <button mat-raised-button (click)="back()">Back</button>
+            </div>
+        </div>
+    </ng-template>
+
+</div>
